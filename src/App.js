@@ -51,10 +51,42 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        {this.state.user.map((item, index) => {
+        <button onClick={this.clickHandler}> Click</button>
+        <button
+          onClick={() => {
+            this.setState({ showUsersList: !this.state.showUsersList });
+          }}
+        >
+          {this.state.showUsersList ? "hide" : "show"}
+        </button>
+        {this.state.showUsersList && (
+          <RenderUsers usersList={this.state.user} />
+        )}
+      </div>
+    );
+  }
+}
+
+class RenderUsers extends Component {
+  constructor() {
+    super();
+  }
+
+  componentDidMount() {
+    document.title = `${this.props.usersList.length} users`;
+  }
+
+  componentWillUnmount() {
+    document.title = "pusta";
+  }
+
+  render() {
+    return (
+      <div>
+        {" "}
+        {this.props.usersList.map((item, index) => {
           return <h1 key={index}>{item}</h1>;
         })}
-        <button onClick={this.clickHandler}> Click</button>
       </div>
     );
   }
